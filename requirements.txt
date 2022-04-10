@@ -1,0 +1,7 @@
+Django==2.2.9
+django-filter==21.1
+djangorestframework==3.13.1
+importlib-metadata==4.8.3
+Markdown==3.3.6
+pytz==2022.1
+sqlparse==0.4.2
