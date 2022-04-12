@@ -34,6 +34,8 @@ class CursoSerializer(serializers.ModelSerializer):
     Uma instância do serializer retorna os campos do model
     bem como seus respectivos tipos.
     '''
+    avaliacoes = AvaliacaoSerializer(many = True)
+
     class Meta:
         model = Curso
         fields = (
@@ -42,4 +44,5 @@ class CursoSerializer(serializers.ModelSerializer):
             'url',
             'criacao',
             'ativo',
+            'avaliacoes'
         )
