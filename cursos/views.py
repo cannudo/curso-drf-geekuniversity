@@ -50,7 +50,8 @@ class CursoViewSet(viewsets.ModelViewSet):
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
 
-    def avaliacoes(self, request, pk = None):
+    @action(detail = True, methods = ['get']) # Cria uma nova rota
+    def avaliacoes(self, request, pk = None): # View da nova rota
         curso = self.generics.get_object()
         serializer = AvaliacaoSerializer(curso.avaliacoes.all(),
                                         many = True) #        1N relationship
