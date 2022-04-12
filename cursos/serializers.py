@@ -34,7 +34,7 @@ class CursoSerializer(serializers.ModelSerializer):
     Uma instância do serializer retorna os campos do model
     bem como seus respectivos tipos.
     '''
-    avaliacoes = AvaliacaoSerializer(many = True)
+    avaliacoes = AvaliacaoSerializer(many = True, read_only = True) # Nested Relationships
 
     class Meta:
         model = Curso
