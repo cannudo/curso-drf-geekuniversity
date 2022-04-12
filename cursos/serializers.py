@@ -34,7 +34,11 @@ class CursoSerializer(serializers.ModelSerializer):
     Uma instância do serializer retorna os campos do model
     bem como seus respectivos tipos.
     '''
-    avaliacoes = AvaliacaoSerializer(many = True, read_only = True) # Nested Relationships
+    avaliacoes = serializers.HyperlinkedRelatedField(
+        many = True,
+        read_only = True,
+        view_name = 'avaliacao-detail'
+    ) # HyperLinked Related Relationships
 
     class Meta:
         model = Curso
