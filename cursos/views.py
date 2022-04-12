@@ -2,6 +2,7 @@ from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import mixins
 
 from .models import Curso, Avaliacao
 from .serializers import CursoSerializer, AvaliacaoSerializer
@@ -52,7 +53,7 @@ class CursoViewSet(viewsets.ModelViewSet):
 
     @action(detail = True, methods = ['get']) # Cria uma nova rota
     def avaliacoes(self, request, pk = None): # View da nova rota
-        curso = self.generics.get_object()
+        curso = self.get_object()
         serializer = AvaliacaoSerializer(curso.avaliacoes.all(),
                                         many = True) #        1N relationship
                                                      # Curso tem uma lista de avaliações
@@ -61,6 +62,9 @@ class CursoViewSet(viewsets.ModelViewSet):
                                          #               mato da response
 
 
-class AvaliacaoViewSet(viewsets.ModelViewSet):
+class AvaliacaoViewSet(mixins.RetrieveModelMixin, mixins.CreateModelMixin, viewsets.GenericViewSet):
+    '''
+    Não retorna lista, apenas instâncias singulares
+    '''
     queryset = Avaliacao.objects.all()
     serializer_class = AvaliacaoSerializer
