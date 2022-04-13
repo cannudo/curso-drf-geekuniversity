@@ -52,9 +52,17 @@ class CursoViewSet(viewsets.ModelViewSet):
     serializer_class = CursoSerializer
 
     @action(detail = True, methods = ['get']) # Cria uma nova rota
-    def avaliacoes(self, request, pk = None): # View da nova rota
-        curso = self.get_object()
-        serializer = AvaliacaoSerializer(curso.avaliacoes.all(),
+    def avaliacoes(self, request, pk = None): # View da nova 
+        avaliacoes = Avaliacao.objects.filter(curso_id = pk)
+
+        self.pagination_class.page_size = 5
+        page = self.paginate_queryset(avaliacoes)
+        if page is not None:
+            serializer = AvaliacaoSerializer(page, many = True)
+
+            return self.get_paginated_response(serializer.data)
+
+        serializer = AvaliacaoSerializer(avaliacoes,
                                         many = True) #        1N relationship
                                                      # Curso tem uma lista de avaliações
         return Response(serializer.data) # Response() -> Binary string (content-type do 
